@@ -1,0 +1,49 @@
+{
+  "name": "school_erp",
+  "version": "1.0.0",
+  "description": "A web-based school management ERP built with Node.js, Express and PostgreSQL. It manages student records, tracks fee payments and outstanding balances, provides a student portal, and integrates Safaricom M-Pesa Daraja for automated payment tracking and reconciliation.",
+  "main": "src/server.js",
+  "scripts": {
+    "migrate": "node db/migrate.js",
+    "seed:admin": "node scripts/seed-admin.js",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "jest --runInBand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meshe-coder/school_erp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/meshe-coder/school_erp/issues"
+  },
+  "homepage": "https://github.com/meshe-coder/school_erp#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.5",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.3.2"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ]
+  }
+}

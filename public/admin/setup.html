@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>School Setup - School ERP</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body hidden>
+  <header class="app-header" data-app-nav></header>
+  <main class="container">
+    <div class="page-heading"><div><p class="eyebrow">School structure</p><h1>Setup</h1></div></div>
+
+    <section class="card setup-section">
+      <h2>Academic years</h2>
+      <form id="year-form" class="form-grid">
+        <div class="field"><label for="year-name">Year name</label><input id="year-name" name="name" placeholder="2026" required></div>
+        <div class="field"><label for="year-start">Start date</label><input id="year-start" name="startDate" type="date" required></div>
+        <div class="field"><label for="year-end">End date</label><input id="year-end" name="endDate" type="date" required></div>
+        <button class="primary-button" type="submit">Add year</button>
+      </form>
+      <div class="table-wrap"><table><thead><tr><th>Year</th><th>Dates</th><th>Status</th><th>Action</th></tr></thead><tbody data-years-table><tr><td colspan="4" class="loading-state">Loading...</td></tr></tbody></table></div>
+    </section>
+
+    <section class="card setup-section">
+      <h2>Terms</h2>
+      <form id="term-form" class="form-grid">
+        <div class="field"><label for="term-year">Academic year</label><select id="term-year" name="yearId" required></select></div>
+        <div class="field"><label for="term-number">Term number</label><select id="term-number" name="termNumber"><option value="1">Term 1</option><option value="2">Term 2</option><option value="3">Term 3</option></select></div>
+        <div class="field"><label for="term-name">Name</label><input id="term-name" name="name" placeholder="Term 1" required></div>
+        <div class="field"><label for="term-start">Start date</label><input id="term-start" name="startDate" type="date" required></div>
+        <div class="field"><label for="term-end">End date</label><input id="term-end" name="endDate" type="date" required></div>
+        <button class="primary-button" type="submit">Add term</button>
+      </form>
+      <div data-terms-list class="table-wrap"></div>
+    </section>
+
+    <section class="card setup-section">
+      <h2>Grade levels</h2>
+      <form id="grade-form" class="form-grid">
+        <div class="field"><label for="grade-name">Name</label><input id="grade-name" name="name" placeholder="Baby Class, PP1, PP2" required></div>
+        <div class="field"><label for="grade-order">Display order</label><input id="grade-order" name="sortOrder" type="number" value="0" min="0"></div>
+        <button class="primary-button" type="submit">Add grade level</button>
+      </form>
+      <div data-grade-list class="chip-list"></div>
+    </section>
+
+    <section class="card setup-section">
+      <h2>Classes</h2>
+      <form id="class-form" class="form-grid">
+        <div class="field"><label for="class-year">Academic year</label><select id="class-year" name="academicYearId" required></select></div>
+        <div class="field"><label for="class-grade">Grade level</label><select id="class-grade" name="gradeLevelId" required></select></div>
+        <div class="field"><label for="class-name">Class name</label><input id="class-name" name="name" placeholder="PP1 East" required></div>
+        <button class="primary-button" type="submit">Add class</button>
+      </form>
+      <div class="table-wrap"><table><thead><tr><th>Year</th><th>Grade</th><th>Class</th></tr></thead><tbody data-class-table><tr><td colspan="3" class="loading-state">Loading...</td></tr></tbody></table></div>
+    </section>
+  </main>
+  <script type="module" src="/js/pages/admin-setup.js"></script>
+</body>
+</html>

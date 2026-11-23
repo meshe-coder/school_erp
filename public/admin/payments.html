@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Payments - School ERP</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body hidden>
+  <header class="app-header" data-app-nav></header>
+  <main class="container">
+    <div class="page-heading">
+      <div><p class="eyebrow">Money received</p><h1>Payments</h1></div>
+    </div>
+
+    <section class="card">
+      <h2>Record a payment</h2>
+      <div class="field">
+        <label for="student-search">Search student</label>
+        <input id="student-search" type="search" placeholder="Admission number or name">
+        <div id="student-results" class="search-results"></div>
+      </div>
+      <div id="selected-student" class="selected-student">No student selected</div>
+
+      <form id="payment-form">
+        <input id="studentId" name="studentId" type="hidden">
+        <div class="form-grid">
+          <div class="field"><label for="amount">Amount (KES)</label><input id="amount" name="amount" type="number" min="0.01" step="0.01" required></div>
+          <div class="field"><label for="method">Method</label><select id="method" name="method"><option value="cash">Cash</option><option value="mpesa">M-Pesa</option><option value="bank">Bank</option><option value="other">Other</option></select></div>
+          <div class="field"><label for="reference">Reference</label><input id="reference" name="reference" placeholder="Optional"><small id="reference-hint"></small></div>
+          <div class="field"><label for="paidAt">Date and time</label><input id="paidAt" name="paidAt" type="datetime-local"></div>
+          <div class="field field-wide"><label for="note">Note (optional)</label><textarea id="note" name="note" rows="2"></textarea></div>
+        </div>
+        <button id="record-payment-button" class="primary-button" type="submit">Record payment</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Payment history</h2>
+      <div class="filter-grid">
+        <div class="field"><label for="history-search">Search</label><input id="history-search" type="search" placeholder="Name, admission or reference"></div>
+        <div class="field"><label for="history-method">Method</label><select id="history-method"><option value="">All methods</option><option value="cash">Cash</option><option value="mpesa">M-Pesa</option><option value="bank">Bank</option><option value="other">Other</option></select></div>
+        <div class="field"><label for="history-status">Status</label><select id="history-status"><option value="">All statuses</option><option value="valid">Valid</option><option value="reversed">Reversed</option></select></div>
+        <div class="field"><label for="history-from">From</label><input id="history-from" type="date"></div>
+        <div class="field"><label for="history-to">To</label><input id="history-to" type="date"></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Student</th><th>Amount</th><th>Method</th><th>Reference</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+          <tbody data-payment-history><tr><td colspan="7" class="loading-state">Loading payments...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="pagination" data-payment-pagination></div>
+    </section>
+  </main>
+  <script type="module" src="/js/pages/admin-payments.js"></script>
+</body>
+</html>

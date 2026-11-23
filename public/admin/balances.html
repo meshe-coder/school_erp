@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Balances - School ERP</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body hidden>
+  <header class="app-header" data-app-nav></header>
+  <main class="container">
+    <div class="page-heading">
+      <div><p class="eyebrow">Fees overview</p><h1>Student balances</h1></div>
+    </div>
+
+    <section class="card">
+      <div class="filter-grid balance-filters">
+        <div class="field"><label for="balance-search">Search students</label><input id="balance-search" type="search" placeholder="Admission number or name"></div>
+        <div class="field"><label for="balance-class">Class</label><select id="balance-class"><option value="">All classes</option></select></div>
+        <div class="field checkbox-field"><label><input id="owing-only" type="checkbox"> Only students who owe</label></div>
+      </div>
+      <div class="summary-bar" data-balance-summary>
+        <div class="loading-state">Loading summary...</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Admission number</th><th>Student</th><th>Class</th><th>Total billed</th><th>Total paid</th><th>Balance</th><th>Credit</th></tr></thead>
+          <tbody data-balance-rows><tr><td colspan="7" class="loading-state">Loading balances...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="pagination" data-balance-pagination></div>
+    </section>
+  </main>
+  <script type="module" src="/js/pages/admin-balances.js"></script>
+</body>
+</html>

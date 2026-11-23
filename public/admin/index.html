@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard - School ERP</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body hidden>
+  <header class="app-header" data-app-nav></header>
+  <main class="container">
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">School overview</p>
+        <h1>Dashboard</h1>
+      </div>
+      <div class="button-row">
+        <a class="primary-button" href="/admin/payments.html">Record payment</a>
+        <a class="secondary-button" href="/admin/students.html">Add student</a>
+      </div>
+    </div>
+
+    <div data-dashboard-banners></div>
+
+    <section class="dashboard-grid" data-dashboard-cards>
+      <article class="card"><div class="loading-state">Loading dashboard...</div></article>
+    </section>
+
+    <section class="card dashboard-section">
+      <div class="section-heading">
+        <h2>Recent payments</h2>
+        <a href="/admin/payments.html">View all</a>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Student</th><th>Amount</th><th>Method</th><th>Date</th></tr></thead>
+          <tbody data-recent-payments>
+            <tr><td colspan="4" class="loading-state">Loading payments...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/js/pages/admin-dashboard.js"></script>
+</body>
+</html>
