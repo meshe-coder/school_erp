@@ -27,9 +27,9 @@ School ERP authentication module built with Node.js, Express, PostgreSQL, Passpo
    ```env
    NODE_ENV=development
    PORT=4000
-   DATABASE_URL=postgres://erp_user:your_password@localhost:5432/school_erp
+   DATABASE_URL=postgres://erp_user:your_password@postgres:5432/school_erp
    SESSION_SECRET=replace-with-a-long-random-string
-   CORS_ORIGIN=http://localhost:3000
+   CORS_ORIGIN=https://your-domain.com
    SEED_ADMIN_USERNAME=admin
    SEED_ADMIN_EMAIL=admin@example.com
    SEED_ADMIN_PASSWORD=ChangeMe123!
@@ -53,7 +53,7 @@ School ERP authentication module built with Node.js, Express, PostgreSQL, Passpo
    npm run dev
    ```
 
-   The API is available at `http://localhost:4000/api`.
+   The API is available at `https://your-domain.com/api`.
 
 ## Tests
 
@@ -70,13 +70,13 @@ Tests use Supertest, PostgreSQL, and cookie agents. Test users are cleaned up af
 ```bash
 curl -i -c cookies.txt -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"ChangeMe123!"}' \
-  http://localhost:4000/api/auth/login
+  https://your-domain.com/api/auth/login
 ```
 
 ### Current user
 
 ```bash
-curl -i -b cookies.txt http://localhost:4000/api/auth/me
+curl -i -b cookies.txt https://your-domain.com/api/auth/me
 ```
 
 ### Change password
@@ -84,13 +84,13 @@ curl -i -b cookies.txt http://localhost:4000/api/auth/me
 ```bash
 curl -i -b cookies.txt -H "Content-Type: application/json" \
   -d '{"currentPassword":"ChangeMe123!","newPassword":"NewPassword123!"}' \
-  http://localhost:4000/api/auth/change-password
+  https://your-domain.com/api/auth/change-password
 ```
 
 ### Logout
 
 ```bash
-curl -i -b cookies.txt -X POST http://localhost:4000/api/auth/logout
+curl -i -b cookies.txt -X POST https://your-domain.com/api/auth/logout
 ```
 
 ## Admin user management
@@ -101,22 +101,22 @@ Requires an authenticated admin session.
 # Create a user
 curl -i -b cookies.txt -H "Content-Type: application/json" \
   -d '{"username":"teacher1","email":"teacher1@example.com","role":"teacher"}' \
-  http://localhost:4000/api/admin/users
+  https://your-domain.com/api/admin/users
 
 # List users
-curl -i -b cookies.txt 'http://localhost:4000/api/admin/users?role=teacher&page=1&limit=20'
+curl -i -b cookies.txt 'https://your-domain.com/api/admin/users?role=teacher&page=1&limit=20'
 
 # Get a user
-curl -i -b cookies.txt http://localhost:4000/api/admin/users/USER_ID
+curl -i -b cookies.txt https://your-domain.com/api/admin/users/USER_ID
 
 # Update a user
 curl -i -b cookies.txt -X PATCH -H "Content-Type: application/json" \
   -d '{"isActive":false}' \
-  http://localhost:4000/api/admin/users/USER_ID
+  https://your-domain.com/api/admin/users/USER_ID
 
 # Reset a password
 curl -i -b cookies.txt -X POST \
-  http://localhost:4000/api/admin/users/USER_ID/reset-password
+  https://your-domain.com/api/admin/users/USER_ID/reset-password
 ```
 
 ## Step 2 endpoints
@@ -176,7 +176,7 @@ Bulk fee example:
 ```bash
 curl -i -b cookies.txt -X PUT -H "Content-Type: application/json" \
   -d '{"fees":[{"classId":"CLASS_ID","amount":"12000.50"}]}' \
-  http://localhost:4000/api/admin/terms/TERM_ID/class-fees
+  https://your-domain.com/api/admin/terms/TERM_ID/class-fees
 ```
 
 ### Student fee overrides
@@ -191,13 +191,13 @@ Override example:
 ```bash
 curl -i -b cookies.txt -X PUT -H "Content-Type: application/json" \
   -d '{"termId":"TERM_ID","amount":"0.00","reason":"Sibling discount"}' \
-  http://localhost:4000/api/admin/students/STUDENT_ID/fee-override
+  https://your-domain.com/api/admin/students/STUDENT_ID/fee-override
 ```
 
 ### Student self-service
 
 ```bash
-curl -i -b cookies.txt http://localhost:4000/api/student/me/fee
+curl -i -b cookies.txt https://your-domain.com/api/student/me/fee
 ```
 
 Fee amounts are returned as strings with exactly two decimal places. Totals are calculated in PostgreSQL using `NUMERIC(12,2)` values.
@@ -214,7 +214,7 @@ Generate bills example:
 ```bash
 curl -i -b cookies.txt -X POST -H "Content-Type: application/json" \
   -d '{"refresh":false}' \
-  http://localhost:4000/api/admin/terms/TERM_ID/generate-bills
+  https://your-domain.com/api/admin/terms/TERM_ID/generate-bills
 ```
 
 ### Payments
@@ -228,7 +228,7 @@ Cash payment example:
 ```bash
 curl -i -b cookies.txt -X POST -H "Content-Type: application/json" \
   -d '{"admissionNumber":"ADM001","amount":"5000.00","method":"cash"}' \
-  http://localhost:4000/api/admin/payments
+  https://your-domain.com/api/admin/payments
 ```
 
 M-Pesa reference example:
@@ -236,7 +236,7 @@ M-Pesa reference example:
 ```bash
 curl -i -b cookies.txt -X POST -H "Content-Type: application/json" \
   -d '{"studentId":"STUDENT_ID","amount":"5000.00","method":"mpesa","reference":"ABC1234567"}' \
-  http://localhost:4000/api/admin/payments
+  https://your-domain.com/api/admin/payments
 ```
 
 ### Statements and balances

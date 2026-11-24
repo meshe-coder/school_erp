@@ -101,13 +101,12 @@ async function createClass(fields, client) {
   const executor = client || db;
   const result = await executor.query(
     `INSERT INTO classes
-       (academic_year_id, grade_level_id, name, class_teacher_id)
-     VALUES ($1, $2, $3, $4)
+       (academic_year_id, grade_level_id, name)
+     VALUES ($1, $2, $3)
      RETURNING id, academic_year_id AS "academicYearId",
                grade_level_id AS "gradeLevelId", name,
-               class_teacher_id AS "classTeacherId",
                created_at AS "createdAt", updated_at AS "updatedAt"`,
-    [fields.academicYearId, fields.gradeLevelId, fields.name, fields.classTeacherId || null]
+    [fields.academicYearId, fields.gradeLevelId, fields.name]
   );
   return result.rows[0];
 }
@@ -130,21 +129,16 @@ async function listClasses({ academicYearId, gradeLevelId }, client) {
   const result = await executor.query(
     `SELECT c.id, c.academic_year_id AS "academicYearId",
             c.grade_level_id AS "gradeLevelId", c.name,
-            c.class_teacher_id AS "classTeacherId",
             c.created_at AS "createdAt", c.updated_at AS "updatedAt",
             gl.name AS "gradeLevelName",
             ay.name AS "academicYearName",
-            CASE WHEN t.id IS NULL THEN NULL
-                 ELSE t.first_name || ' ' || t.last_name END AS "classTeacherName",
             COUNT(e.id)::INTEGER AS "studentCount"
        FROM classes c
        JOIN grade_levels gl ON gl.id = c.grade_level_id
        JOIN academic_years ay ON ay.id = c.academic_year_id
-       LEFT JOIN teachers t ON t.id = c.class_teacher_id
        LEFT JOIN enrollments e ON e.class_id = c.id AND e.status = 'active'
        ${whereClause}
-      GROUP BY c.id, gl.name, gl.sort_order, ay.name, ay.start_date,
-               t.id, t.first_name, t.last_name
+      GROUP BY c.id, gl.name, gl.sort_order, ay.name, ay.start_date
       ORDER BY ay.start_date DESC, gl.sort_order ASC, c.name ASC`,
     params
   );
@@ -156,7 +150,6 @@ async function findClassById(id, client) {
   const result = await executor.query(
     `SELECT c.id, c.academic_year_id AS "academicYearId",
             c.grade_level_id AS "gradeLevelId", c.name,
-            c.class_teacher_id AS "classTeacherId",
             c.created_at AS "createdAt", c.updated_at AS "updatedAt"
        FROM classes c WHERE c.id = $1`,
     [id]
@@ -173,10 +166,6 @@ async function updateClass(id, fields, client) {
     params.push(fields.name);
     assignments.push(`name = $${params.length}`);
   }
-  if (fields.classTeacherId !== undefined) {
-    params.push(fields.classTeacherId || null);
-    assignments.push(`class_teacher_id = $${params.length}`);
-  }
 
   assignments.push('updated_at = NOW()');
   params.push(id);
@@ -186,7 +175,6 @@ async function updateClass(id, fields, client) {
       WHERE id = $${params.length}
       RETURNING id, academic_year_id AS "academicYearId",
                 grade_level_id AS "gradeLevelId", name,
-                class_teacher_id AS "classTeacherId",
                 created_at AS "createdAt", updated_at AS "updatedAt"`,
     params
   );

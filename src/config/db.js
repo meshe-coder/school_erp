@@ -1,8 +1,11 @@
 const { Pool } = require('pg');
 const env = require('./env');
 
+const isProduction = env.nodeEnv === 'production' || env.databaseUrl.includes('neon.tech');
+
 const pool = new Pool({
   connectionString: env.databaseUrl,
+  ssl: isProduction ? { rejectUnauthorized: false } : false,
 });
 
 async function withTransaction(callback) {

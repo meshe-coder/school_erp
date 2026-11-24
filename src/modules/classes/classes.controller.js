@@ -43,11 +43,6 @@ async function createClass(req, res, next) {
     const level = await classesRepository.findGradeLevelById(req.body.gradeLevelId);
     if (!level) return res.status(400).json({ error: 'Grade level does not exist' });
 
-    if (req.body.classTeacherId) {
-      const teacher = await classesRepository.findTeacherById(req.body.classTeacherId);
-      if (!teacher) return res.status(400).json({ error: 'Class teacher does not exist' });
-    }
-
     const schoolClass = await classesRepository.createClass(req.body);
     return res.status(201).json({ class: schoolClass });
   } catch (error) {
@@ -79,11 +74,6 @@ async function updateClass(req, res, next) {
   try {
     const existing = await classesRepository.findClassById(req.params.id);
     if (!existing) return res.status(404).json({ error: 'Class not found' });
-
-    if (req.body.classTeacherId) {
-      const teacher = await classesRepository.findTeacherById(req.body.classTeacherId);
-      if (!teacher) return res.status(400).json({ error: 'Class teacher does not exist' });
-    }
 
     const schoolClass = await classesRepository.updateClass(req.params.id, req.body);
     return res.status(200).json({ class: schoolClass });

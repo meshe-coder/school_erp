@@ -16,12 +16,10 @@ const classCreateSchema = z.object({
   academicYearId: z.string().uuid(),
   gradeLevelId: z.string().uuid(),
   name: z.string().trim().min(1).max(60),
-  classTeacherId: z.string().uuid().optional().nullable(),
 });
 
 const classUpdateSchema = z.object({
-  name: z.string().trim().min(1).max(60).optional(),
-  classTeacherId: z.string().uuid().optional().nullable(),
+  name: z.string().trim().min(1).max(60),
 }).refine((value) => Object.keys(value).length > 0, {
   message: 'At least one field is required',
 });

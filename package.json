@@ -4,6 +4,7 @@
   "description": "A web-based school management ERP built with Node.js, Express and PostgreSQL. It manages student records, tracks fee payments and outstanding balances, provides a student portal, and integrates Safaricom M-Pesa Daraja for automated payment tracking and reconciliation.",
   "main": "src/server.js",
   "scripts": {
+    "db:reset": "node db/reset.js && npm run migrate && npm run seed:admin",
     "migrate": "node db/migrate.js",
     "seed:admin": "node scripts/seed-admin.js",
     "dev": "nodemon src/server.js",
@@ -23,6 +24,8 @@
   },
   "homepage": "https://github.com/meshe-coder/school_erp#readme",
   "dependencies": {
+    "@neon/config": "^1.14.6",
+    "@neon/env": "^2.1.9",
     "bcrypt": "^6.0.0",
     "connect-pg-simple": "^10.0.0",
     "cors": "^2.8.6",
