@@ -1,0 +1,40 @@
+databases:
+  - name: school-erp-db
+    databaseName: school_erp
+    user: erp_user
+    plan: free
+
+services:
+  - type: web
+    name: school-erp-api
+    env: node
+    plan: free
+    buildCommand: npm install && npm run migrate && npm run seed:admin
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: school-erp-db
+          property: connectionString
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: https://your-frontend-domain.com
+      - key: SEED_ADMIN_USERNAME
+        value: admin
+      - key: SEED_ADMIN_EMAIL
+        value: admin@school.local
+      - key: SEED_ADMIN_PASSWORD
+        value: ChangeMe123!
+      - key: MPESA_CONSUMER_KEY
+        sync: false
+      - key: MPESA_CONSUMER_SECRET
+        sync: false
+      - key: MPESA_SHORTCODE
+        sync: false
+      - key: MPESA_PASSKEY
+        sync: false
+      - key: MPESA_CALLBACK_URL
+        sync: false

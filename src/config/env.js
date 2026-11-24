@@ -10,6 +10,11 @@ const requiredVariables = [
   'SEED_ADMIN_USERNAME',
   'SEED_ADMIN_EMAIL',
   'SEED_ADMIN_PASSWORD',
+  'MPESA_CONSUMER_KEY',
+  'MPESA_CONSUMER_SECRET',
+  'MPESA_SHORTCODE',
+  'MPESA_PASSKEY',
+  'MPESA_CALLBACK_URL',
 ];
 
 const missing = requiredVariables.filter((name) => !process.env[name]);
@@ -35,4 +40,16 @@ module.exports = {
   seedAdminPassword: process.env.SEED_ADMIN_PASSWORD,
   schoolName: process.env.SCHOOL_NAME || 'My School',
   paymentInstructions: process.env.PAYMENT_INSTRUCTIONS || '',
+  mpesa: {
+    consumerKey: process.env.MPESA_CONSUMER_KEY,
+    consumerSecret: process.env.MPESA_CONSUMER_SECRET,
+    shortcode: process.env.MPESA_SHORTCODE,
+    passkey: process.env.MPESA_PASSKEY,
+    callbackUrl: process.env.MPESA_CALLBACK_URL,
+    environment: process.env.MPESA_ENVIRONMENT || 'sandbox',
+    baseUrl: process.env.MPESA_BASE_URL || 'https://sandbox.safaricom.co.ke',
+    transType: process.env.MPESA_TRANS_TYPE || 'PayBill',
+    accountReference: process.env.MPESA_ACCOUNT_REFERENCE || 'School Fees',
+    transactionDescription: process.env.MPESA_TRANSACTION_DESCRIPTION || 'School fee payment',
+  },
 };

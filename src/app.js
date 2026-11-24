@@ -14,6 +14,7 @@ const studentsRoutes = require('./modules/students/students.routes');
 const feesRoutes = require('./modules/fees/fees.routes');
 const billingRoutes = require('./modules/billing/billing.routes');
 const billingStudentRoutes = require('./modules/billing/billingStudent.routes');
+const mpesaRoutes = require('./modules/mpesa/mpesa.routes');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 const path = require('path');
 const { blockUntilPasswordChanged } = require('./middleware/auth');
@@ -23,7 +24,7 @@ const app = express();
 
 app.use((req, res, next) => {
   if (req.originalUrl.startsWith('/api/')) {
-    const knownApiPrefixes = ['/api/auth', '/api/admin', '/api/academic', '/api/student', '/api/config'];
+    const knownApiPrefixes = ['/api/auth', '/api/admin', '/api/academic', '/api/student', '/api/config', '/api/mpesa'];
     const known = knownApiPrefixes.some((prefix) => req.originalUrl.startsWith(prefix));
     if (!known) return res.status(404).json({ error: 'Not found' });
   }
@@ -84,6 +85,7 @@ app.use('/api', studentsRoutes);
 app.use('/api', feesRoutes);
 app.use('/api', billingRoutes);
 app.use('/api', billingStudentRoutes);
+app.use('/api', mpesaRoutes);
 app.use('/api', (req, res, next) => {
   const knownPrefixes = ['/api/auth', '/api/admin', '/api/academic', '/api/student'];
   const isKnown = knownPrefixes.some((prefix) => req.originalUrl.startsWith(prefix));
